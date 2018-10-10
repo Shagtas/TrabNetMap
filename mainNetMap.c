@@ -9,8 +9,11 @@
 #include "tadconexao.h"
 #define TAM 41
 
-int main(){
-	FILE* arq;//Declaracao da variavel do tipo FILE* para o arquivo de entrada.
+int main(int argc, char* argv){
+	
+	FILE* arq; //Declaracao da variavel do tipo FILE* para o arquivo de entrada.
+	FILE* arqlog; //Declaracao da variavel do tipo FILE* para o arquivo de log.
+	FILE* arqsai; //Declaracao da variavel do tipo FILE* para o arquivo de saida.
 
 	char comando[TAM];
 	char roteador[TAM];
@@ -78,11 +81,29 @@ int main(){
 		}
 	}while( strcmp(comando, "FIM") != 0 );
 
-	//imprimeRoteadores(lst);
-	//imprimeTerminais(lstTerminais);
+	//Abre arquivo de saida.txt
+	arqlog = fopen("saida.txt", "a");
+  fprintf(fp,"%s %s: %d", comando, nome, num);
+	if(arqlog == NULL){
+		printf("ERRO: arquivo inexistente ou nao encontrado!\n");
+		exit(1);
+	}
 
-	fclose(arq);
+	//Abre arquivo saida.dot (GraphViz)
+	arqsai = fopen("saida.dot", "a");
+  fprintf(fp,"%s %s", nome1, nome2);
+	if(arqsai == NULL){
+		printf("ERRO: arquivo inexistente ou nao encontrado!\n");
+		exit(1);
+	}
+
+	imprimeRoteadores(lst);
+	imprimeTerminais(lstTerminais);
+
+	fclose (arq);
+	fclose (arqlog);
+	fclose (arqsai);
+	liberaRoteador (lst);
 
 	return 0;
 }
-

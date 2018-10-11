@@ -7,6 +7,9 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include "conexao.h"
+#include "roteador.h"
+#include "terminal.h"
 
 /*----- Estrutura dos Roteadores -----*/
 

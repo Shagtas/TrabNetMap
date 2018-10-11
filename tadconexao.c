@@ -7,20 +7,24 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include "conexao.h"
+#include "roteador.h"
+#include "terminal.h"
 
 /*----- Estrutura das Conexoes -----*/
 
 typedef struct tipoconexao TipoConexao;
 
 struct tipoconexao{
-    int num;
-    int numramos;
+    TipoRoteador* num;
+    LisRot* numramos;
+    ListTerminais* listter;
 };
 
 typedef struct celconexao CelConexao;
 
 struct celconexao{
-    void* dispositivo;
+    TipoConexao* dispositivo;
     struct celconexao* prox;
 };
 
@@ -31,120 +35,124 @@ struct listconexao{
   Celconexao* ult;
 };
 
-TipoConexao* inicializaTipoConexao(int no){
-	TipoConexao* novo = (TipoConexao*)malloc(sizeof(TipoConexao));
-	novo->num = no;
-	return(novo);
+ListConexao* criaConexao () {
+  ListConexao* nn = (ListConexao*) malloc (sizeof (ListConexao));
+  m->prim = NULL;
+  m->ult = NULL;
+  return nn;
 }
 
-/*----- Insere novo terminal na lista -----*/
-
-TipoTerminal* inicializaTipoTerminal(char* nome, char* localidade){
-	TipoTerminal* novoter = (TipoTerminal*)malloc(sizeof(TipoTerminal));
-	novoter->nomeTer = malloc( (strlen(nome)+1)*sizeof(char) );
-	strcpy(novoter->nomeTer, nome);
-	novoter->localidade = malloc( (strlen(localidade)+1)*sizeof(char) );
-	strcpy(novoter->localidade, localidade);
-	return(novoter);
+CelConexao* inicializaCelConexao(ListConexao* no){
+	CelConexao* cc = (CelConexao*)malloc(sizeof(CelConexao));
+  TipoConexao* tc = (TipoConexao*)malloc(sizeof(TipoConexao));
+  cc->dispositivo = tc;
+  cc->prox = no->prim;
+  no->prim = cc;
+  if(no->ult == NULL)
+    no->ult = cc;
+  return cc;
 }
 
-ListTerminais* cadastraTerminal(ListTerminais* lstTer, char* terminal, char* localidade){
-	TipoTerminal* tipoTer = inicializaTipoTerminal(terminal, localidade);
-	//Aloca espaco para uma nova celula
-	CelTerminal* nova_celterminal = (CelTerminal*)malloc(sizeof(CelTerminal));
-	nova_celterminal->info = tipoTer;
-	nova_celterminal->prox = NULL;
-	//Se a lista estiver vazia:
-	if(lstTer->prim == NULL){
-		lstTer->prim = nova_celterminal;
-		lstTer->ult = nova_celterminal;
-	}
-	else{//Insere no final da lista:
-		lstTer->ult->prox = nova_celterminal;
-		lstTer->ult = nova_celterminal;
-	}
-	return(lstTer);
+void inicializaConRot(TipoRoteador* a, TipoRoteador* b, ListConexao* c){
+  CelConexao* d = c->prim;
+  if(a == NULL)
+    d->dispositivo->num = a;
+  conectaRoteador (b, d->dispositivo->num);
 }
 
-/*----- Imprime a lista de terminais -----*/
-
-void imprimeTerminais(ListTerminais* l){
-	CelTerminal* p = l->prim;
-	while(p != NULL){
-		printf("TERMINAL: %s, CIDADE: %s\n", p->info->nomeTer, p->info->localidade);
-		p = p->prox;
-	}
-}
-
-/*----- Remove terminal do NetMap -----*/
-
-void removeTerminal(ListTerminais* lstTer, char* terminal){
-	CelTerminal* p = lstTer->prim;
-	CelTerminal* ant = NULL;
-	while(p != NULL && (strcmp(p->info->nomeTer, terminal) != 0	) ){//Percorre a lista ate achar o elemento ou ate ela ser NULL.
-		ant = p;
-		p = p->prox;
-	}
-	if(p == NULL){//Se o elemento nao estiver na lista.
-		printf("Erro: %s inexistente no NetMap\n", terminal);
-		return;
-	}
-	if(p == lstTer->prim && p == lstTer->ult){
-		lstTer->prim = NULL;
-		lstTer->ult = NULL;
-		free(p);
-		return;
-	}
-	if(p == lstTer->prim){//Se elemento a ser retirado estiver no inicio.
-		lstTer->prim = p->prox;
-		free(p);
-		return;
-	}
-	if(p == lstTer->ult){//Se elemento a ser retirado estiver no final.
-		lstTer->ult = ant;
-		ant->prox = NULL;
-		free(p);
-		return;
-	}
-	else{//Se elemento a ser retirado estiver no meio.
-		ant->prox = p->prox;
-		p = ant->prox;
-		free(p);
-		return;
-	}
-}
-	int FrequenciaTerminal(CelTerminal* cel, char* localidade){
-    if(cel != NULL){
-        int cont = 0;
-        CelTerminal *cc = cel->prim;
-        CelTerminal *ee = NULL;
-        while (p != NULL) {
-            if(strcmp(cc->prim->localidade, localidade) == 0){
-                cont++;
-            }else{
-                ee = cc;
-                cc = cc->prox;
-            }
-
-        }
-        return cont;
-    }else return -1;
-}
-
-char* nomeTerminal(Terminal* t){
-  return t->nome;
-}
-
-void liberaTerminal (CelTerminal* cel){
-    if(cel != NULL){
-        CelTerminal* cc = cel->prim;
-        CelTerminal* temp;
-        while (cc != NULL) {
-            temp = cc->prox;
-            free(cc->info->nomeTer);
-            free(cc->info->localidade);
-            free(cc->info);
-            cc = temp;
-        }
-        free(cel);
+int seexiste(ListTerminais* aa, char* bb){
+    CelConexao* cc = aa->prim;
+    CelConexao* dd = NULL;
+    while (cc != NULL && buscaRot(c->dispositivo->numramos, bb) != cc->dispositivo->num) {
+        dd = cc;
+        cc = cc->prox;
     }
+    if(cc == NULL)
+        return 0;
+    else
+        return 1;
+}
+
+
+void iniciaConexaoTerminal(Lista3* l, Router *r, tlista* t, Terminal* s){
+    Malha* m = l->primeiro;
+    Malha* u = NULL;
+    while (m != NULL && m->equipamento->rot != r) {
+        u = m;
+        m = m->prox;
+    }
+
+    if(m->equipamento->rot == r){
+        conectaTerminal(t,s);
+    }
+}
+
+
+void removeConexaoRoteadores(Lista3* m,List* rot, char* nome){
+    Malha* prim = m->primeiro;
+    Malha* ult = NULL;
+    Conexao* c;
+    Router* r;
+    char nome2[10];
+    while (m != NULL) {
+        c = m->primeiro->equipamento;
+        c->rot= buscaRoteador(rot,nome);
+        r = c->rot;
+        strcpy(nome2,nomeRoteador(r));
+        if(nome2 == nome){
+          RemoveRoteador(rot,nome);
+          break;
+        }
+        ult = prim;
+        prim = prim->prox;
+    }
+
+}
+
+char* nomeEnlace(Lista3* c){
+  Malha* con;
+  Conexao* eq;
+  con = c->primeiro;
+  eq = con->equipamento;
+  Router* r = eq->rot;
+  return nomeRoteador(r);
+}
+
+tlista* capturaListaTerminal(Lista3* t, char* nome){
+    Malha *m = t->primeiro;
+    Conexao *c = m->equipamento;
+    tlista *t1 = c->terminal;
+    buscaTerminal(t1,nome);
+}
+
+List* capturaListaRoteador(Lista3* l, List* l1){
+  Malha* m = l->primeiro;
+  Conexao* c = m->equipamento;
+  Router* r = c->rot;
+  buscaRoteador(l1,nomeRoteador(r));
+}
+
+List* capturaListaRoteadorRemocao(Lista3* m){
+    Malha* n = m->primeiro;
+    Conexao* c = n->equipamento;
+    List* l = c->roteador;
+    return l;
+}
+
+
+void EncerraListaConexoes(Lista3* l){
+    if(l != NULL){
+        Malha* novo = l->primeiro;
+        Malha* t;
+        while (novo != NULL) {
+            t = novo->prox;
+            LiberaRoteador(novo->equipamento->rot);
+            EncerraLista(novo->equipamento->roteador);
+            EncerraListaTerminais(novo->equipamento->terminal);
+            free(novo->equipamento);
+            free(novo);
+            novo = t;
+        }
+        free(l);
+    }
+}

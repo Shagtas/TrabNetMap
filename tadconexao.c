@@ -7,9 +7,9 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include "conexao.h"
-#include "roteador.h"
-#include "terminal.h"
+#include "tadconexao.h"
+#include "tadroteador.h"
+#include "tadterminal.h"
 
 /*----- Estrutura das Conexoes -----*/
 
@@ -74,21 +74,19 @@ int seexiste(ListTerminais* aa, char* bb){
 }
 
 
-void iniciaConexaoTerminal(Lista3* l, Router *r, tlista* t, Terminal* s){
-    Malha* m = l->primeiro;
-    Malha* u = NULL;
-    while (m != NULL && m->equipamento->rot != r) {
-        u = m;
-        m = m->prox;
+void inicializaConTerl(ListConexao* a, TipoRoteador* b, ListTerminais* c, TipoTerminal* d){
+    CelConexao* cc = a->prim;
+    CelConexao* dd = NULL;
+    while ((cc != NULL) && (cc->dispositivo->num != b) {
+        dd = cc;
+        cc = cc->prox;
     }
-
-    if(m->equipamento->rot == r){
-        conectaTerminal(t,s);
-    }
+    if(cc->dispositivo->num == a)
+        conectaTerminal(c, d);
 }
 
 
-void removeConexaoRoteadores(Lista3* m,List* rot, char* nome){
+void removeConRot(Lista3* m,List* rot, char* nome){
     Malha* prim = m->primeiro;
     Malha* ult = NULL;
     Conexao* c;
@@ -105,8 +103,9 @@ void removeConexaoRoteadores(Lista3* m,List* rot, char* nome){
         }
         ult = prim;
         prim = prim->prox;
-    }
 
+      }
+      return
 }
 
 char* nomeEnlace(Lista3* c){

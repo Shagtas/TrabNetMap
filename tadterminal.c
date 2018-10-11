@@ -7,9 +7,9 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include "conexao.h"
-#include "roteador.h"
-#include "terminal.h"
+#include "tadconexao.h"
+#include "tadroteador.h"
+#include "tadterminal.h"
 
 /*----- Estrutura dos Terminais -----*/
 

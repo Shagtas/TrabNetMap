@@ -13,8 +13,11 @@ terminal.o: terminal.c
 roteador.o: roteador.c
 	gcc -c roteador.c
 
+graph: 
+	neato -Tpdf saida.dot -o saida.pdf
+
 clean:
 	rm -rf *.o
 
 run: netMap
-	./netMap
+	./netMap entradaNetMap.txt

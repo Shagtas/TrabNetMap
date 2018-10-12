@@ -26,6 +26,8 @@ int FrequenciaTerminal(CelTerminal* cel, char* local);
 
 char* nomeTerminal(CelTerminal* cel);
 
+char* localidadeTer(TipoTerminal* t);
+
 void liberaterminal (CelTerminal* cel);
 
 #endif // TADTERMINAL_H

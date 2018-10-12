@@ -131,7 +131,7 @@ List* capturaListaRoteadorRemocao(Lista3* m){
     Malha* n = m->primeiro;
     Conexao* c = n->equipamento;
     List* l = c->roteador;
-    return l;
+    return l
 }
 
 

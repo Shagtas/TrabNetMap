@@ -1,6 +1,9 @@
 #ifndef TADROTEADOR_H
 #define TADROTEADOR_H
 
+#include "tadconexao.h"
+#include "tadterminal.h"
+
 typedef struct tiporoteador TipoRoteador;
 
 typedef struct celrot CelRot;
@@ -24,6 +27,10 @@ CelRot* insereConexao(CelRot* original, CelRot* anexado);
 void imprimeSubListaRot(CelRot* aux);
 
 void conectaRoteador(ListRot* lstRot, char* rot1, char* rot2);
+
+char* nomeRot (TipoRoteador* a);
+
+void liberaRot (TipoRoteador* a);
 
 void liberaRoteador (listRot* lsRot);
 

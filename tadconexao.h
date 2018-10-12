@@ -10,7 +10,7 @@ typedef struct celconexao CelConexao;
 
 typedef struct listConexao ListConexao;
 
-ListConexao* criaConexao ();
+ListConexao* inicializaCelConexao ();
 
 CelConexao* inicializaCelConexao(ListConexao* no);
 

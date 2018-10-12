@@ -21,8 +21,9 @@ int main(int argc, char** argv){
 	char terminal[TAM];
 	char nome_localidade[TAM];
 
-	ListRot* lst = inicializaListaRot();//Inicializa a lista de roteadores vazia.
+	ListRot* lstRot = inicializaListaRot();//Inicializa a lista de roteadores vazia.
 	ListTerminais* lstTerminais = inicializaListaTerminais();//Inicializa a lista de terminais vazia.
+	ListConexao* lstCon = inicializalstConexao ();//Inicializa a lista de conexaoes vazia.
 
 	arq = fopen(argv[1], "r"); //Arquivo de entrada
 	if(arq == NULL){
@@ -102,7 +103,9 @@ int main(int argc, char** argv){
 	fclose (arq);
 	fclose (arqlog);
 	fclose (arqsai);
-	liberaRoteador (lst);
+	liberaRoteador (lstRot);
+	liberaTerminal(lstTerminais);
+	liberaListCon (lstCon);
 
 	return 0;
 }

@@ -35,7 +35,7 @@ struct listconexao{
   Celconexao* ult;
 };
 
-ListConexao* criaConexao () {
+ListConexao* inicializalstConexao () {
   ListConexao* nn = (ListConexao*) malloc (sizeof (ListConexao));
   m->prim = NULL;
   m->ult = NULL;

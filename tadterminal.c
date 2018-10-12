@@ -138,7 +138,11 @@ void removeTerminal(ListTerminais* lstTer, char* terminal){
 }
 
 char* nomeTerminal(Terminal* t){
-  return t->nome;
+    return t->nome;
+}
+
+char* localidadeTer(TipoTerminal* t){
+    return t->localidade;
 }
 
 void liberaTerminal (CelTerminal* cel){

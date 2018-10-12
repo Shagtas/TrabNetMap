@@ -1,6 +1,9 @@
 #ifndef TADTERMINAL_H
 #define TADTERMINAL_H
 
+#include "tadroteador.h"
+#include "tadconexao.h"
+
 typedef struct tipoterminal TipoTerminal;
 
 typedef struct celterminal CelTerminal;

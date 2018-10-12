@@ -26,8 +26,6 @@ struct celrot{
 	TipoRoteador* item;
 	struct celrot* outrosRot;//Faz a conexao com outros roteadores, a partir daquele roteador.
 	struct celrot* prox;
-	struct celrot* prim;
-	struct celrot* ult;
 };
 
 typedef struct listrot ListRot;
@@ -231,14 +229,25 @@ void conectaRoteador(ListRot* lstRot, char* rot1, char* rot2){
 	}*/
 }
 
-void liberaRoteador (listRot* lsRot) {
+char* nomeRot (TipoRoteador* a) {
+    return a->nomeRot;
+}
+
+void liberaRot (TipoRoteador* a) {
+    free(a->nomeRot);
+    free(a->operadora);
+    free(a);
+}
+    
+
+void liberaListRot (listRot* lsRot) {
     if(lsRot != NULL){
         CelRot* nx = t->prim;
         CelRot* tmp;
         while (nx != NULL) {
             tmp = nx->prox;
             free (nx->nomeRot);
-						free (nx->operadora);
+	    free (nx->operadora);
             nx = tmp;
         }
         free(nx);

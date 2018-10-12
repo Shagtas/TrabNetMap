@@ -43,7 +43,7 @@ ListConexao* criaConexao () {
 }
 
 CelConexao* inicializaCelConexao(ListConexao* no){
-	CelConexao* cc = (CelConexao*)malloc(sizeof(CelConexao));
+  CelConexao* cc = (CelConexao*)malloc(sizeof(CelConexao));
   TipoConexao* tc = (TipoConexao*)malloc(sizeof(TipoConexao));
   cc->dispositivo = tc;
   cc->prox = no->prim;
@@ -86,40 +86,36 @@ void inicializaConTerl(ListConexao* a, TipoRoteador* b, ListTerminais* c, TipoTe
 }
 
 
-void removeConRot(Lista3* m,List* rot, char* nome){
-    Malha* prim = m->primeiro;
-    Malha* ult = NULL;
-    Conexao* c;
-    Router* r;
-    char nome2[10];
-    while (m != NULL) {
-        c = m->primeiro->equipamento;
-        c->rot= buscaRoteador(rot,nome);
-        r = c->rot;
-        strcpy(nome2,nomeRoteador(r));
-        if(nome2 == nome){
-          RemoveRoteador(rot,nome);
+void removeConRot(ListaConexao* a, LisRot* b, char* c){
+    CelConexao* d = a->prim;
+    CelConexao* e = NULL;
+    TipoConexao* f;
+    TipoRoteador* g;
+    char vet[10];
+    while (a != NULL) {
+        f = a->prim->dispositivo;
+        f->b = buscaRot(b, c);
+        g = f->b;
+        strcpy(vet, nomeRot(g));
+        if(strcmp(vet, c) == 0){
+          removeRoteador(b, c);
           break;
         }
-        ult = prim;
-        prim = prim->prox;
-
-      }
-      return
+        e = d;
+        d = d->prox;
+    }
 }
 
-char* nomeEnlace(Lista3* c){
-  Malha* con;
-  Conexao* eq;
-  con = c->primeiro;
-  eq = con->equipamento;
-  Router* r = eq->rot;
-  return nomeRoteador(r);
+char* nomeEnl(ListaConexao* a){
+  CelConexao* b = a->prim;
+  TipoConexao* c = b->dispositivo;
+  TipoRoteador* d = c->num;
+  return nomeRot(d);
 }
 
-tlista* capturaListaTerminal(Lista3* t, char* nome){
-    Malha *m = t->primeiro;
-    Conexao *c = m->equipamento;
+tlista* capturaListaTerminal(ListaConexao* a, char* b){
+    CelConexao* c = a->prim;
+    TipoConexa* d = c->dispositivo;
     tlista *t1 = c->terminal;
     buscaTerminal(t1,nome);
 }

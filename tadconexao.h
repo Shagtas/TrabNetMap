@@ -16,12 +16,20 @@ CelConexao* inicializaCelConexao(ListConexao* no);
 
 void inicializaConRot(TipoRoteador* a, TipoRoteador* b, ListConexao* c);
 
-int seexiste(ListTerminais* aa, char* bb)
+int terexiste(ListTerminais* aa, char* bb);
   
 void inicializaConTerl(ListConexao* a, TipoRoteador* b, ListTerminais* c, TipoTerminal* d);
 
 void removeConRot(ListaConexao* a, LisRot* b, char* c);
 
+char* nomeEnl(ListaConexao* a);
 
+ListaTerminais* capturaListTe(ListaConexao* a, char* b);
+
+ListRot* capturaListRot(ListaConexao* a, ListRot* b);
+
+ListRot* capturaListRotRemove(ListaConexao* a);
+
+void liberaListCon(ListaTerminais* a);
 
 #endif // TADCONEXAO_H

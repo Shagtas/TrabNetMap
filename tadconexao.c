@@ -60,7 +60,7 @@ void inicializaConRot(TipoRoteador* a, TipoRoteador* b, ListConexao* c){
   conectaRoteador (b, d->dispositivo->num);
 }
 
-int seexiste(ListTerminais* aa, char* bb){
+int terexiste(ListTerminais* aa, char* bb){
     CelConexao* cc = aa->prim;
     CelConexao* dd = NULL;
     while (cc != NULL && buscaRot(c->dispositivo->numramos, bb) != cc->dispositivo->num) {
@@ -113,41 +113,41 @@ char* nomeEnl(ListaConexao* a){
   return nomeRot(d);
 }
 
-tlista* capturaListaTerminal(ListaConexao* a, char* b){
+ListaTerminais* capturaListTe(ListaConexao* a, char* b){
     CelConexao* c = a->prim;
     TipoConexa* d = c->dispositivo;
-    tlista *t1 = c->terminal;
-    buscaTerminal(t1,nome);
+    ListaTerminais* e = d->listter;
+    return buscaTerminal(e, b);
 }
 
-List* capturaListaRoteador(Lista3* l, List* l1){
-  Malha* m = l->primeiro;
-  Conexao* c = m->equipamento;
-  Router* r = c->rot;
-  buscaRoteador(l1,nomeRoteador(r));
+ListRot* capturaListRot(ListaConexao* a, ListRot* b){
+  CelConexao* c = a->prim;
+  TipoConexao* d = c->dispositivo;
+  TipoRoteador* e = d->num;
+  return buscaRot(b, nomeRot(e));
 }
 
-List* capturaListaRoteadorRemocao(Lista3* m){
-    Malha* n = m->primeiro;
-    Conexao* c = n->equipamento;
-    List* l = c->roteador;
-    return l
+ListRot* capturaListRotRemove(ListaConexao* a){
+    CelConexao* b = a->prim;
+    TipoConexao* c = b->dispositivo;
+    ListRot* d = c->numramos;
+    return d;
 }
 
 
-void EncerraListaConexoes(Lista3* l){
-    if(l != NULL){
-        Malha* novo = l->primeiro;
-        Malha* t;
-        while (novo != NULL) {
-            t = novo->prox;
-            LiberaRoteador(novo->equipamento->rot);
-            EncerraLista(novo->equipamento->roteador);
-            EncerraListaTerminais(novo->equipamento->terminal);
-            free(novo->equipamento);
-            free(novo);
-            novo = t;
+void liberaListCon(ListaTerminais* a){
+    if(a != NULL){
+        CelConexao* b = a->prim;
+        CelConexao* c;
+        while (b != NULL) {
+            c = b->prox;
+            LiberaRoteador(b->dispositivo->num);
+            liberListRot(b->dispositivo->numramos);
+            liberaListTer(b->dispositivo->listter);
+            free(b->dispositivo);
+            free(b);
+             b = c;
         }
-        free(l);
+        free(a);
     }
 }

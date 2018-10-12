@@ -9,8 +9,7 @@
 #include "tadconexao.h"
 #define TAM 41
 
-int main(int argc, char* argv){
-	
+int main(int argc, char** argv){
 	FILE* arq; //Declaracao da variavel do tipo FILE* para o arquivo de entrada.
 	FILE* arqlog; //Declaracao da variavel do tipo FILE* para o arquivo de log.
 	FILE* arqsai; //Declaracao da variavel do tipo FILE* para o arquivo de saida.
@@ -25,7 +24,7 @@ int main(int argc, char* argv){
 	ListRot* lst = inicializaListaRot();//Inicializa a lista de roteadores vazia.
 	ListTerminais* lstTerminais = inicializaListaTerminais();//Inicializa a lista de terminais vazia.
 
-	arq = fopen("entradaNetMap.txt", "r");
+	arq = fopen(argv[1], "r"); //Arquivo de entrada
 	if(arq == NULL){
 		printf("ERRO: arquivo inexistente ou nao encontrado!\n");
 		exit(1);
